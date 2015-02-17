@@ -80,13 +80,6 @@ public class MainWindow {
 	private FileNameExtensionFilter filter = new FileNameExtensionFilter("FloodLord save files ", "FLDSave");
 	private final JFileChooser jfc = new JFileChooser();
 
-	/*
-	 * 
-	 * 
-	 * 
-	 */
-	
-	
 	public static void main(String[] args){
 		MainWindow m = new MainWindow();
 		m.ShowInitialWindow();
@@ -206,7 +199,6 @@ public class MainWindow {
 
 	//done ! not specifying a GridBagContraints object causes everything to center smoothly :)
 	public void makeFooter(){
-
 		controlPanel.setLayout(new GridBagLayout());
 
 		newgame.addActionListener(new NGListener());
@@ -220,7 +212,6 @@ public class MainWindow {
 
 	//probably done !
 	public void makeColorsPanel(){
-
 		colorsPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
@@ -250,25 +241,20 @@ public class MainWindow {
 
 	//make scirepanel !
 	public void makeScorePanel(){
-		
 		scorePanel.setPreferredSize(new Dimension(150, mainFrame.getHeight()));
 		scorePanel.add(movelabel);
 		scorePanel.add(scorelabel);
 	}	
 
 	public void displayMessageWindow(String msg,String ttl,boolean b){
-
 		if(b == true ){
-
 			JOptionPane.showMessageDialog(mainFrame,msg,ttl,JOptionPane.PLAIN_MESSAGE);
-
 		}else{
 			JOptionPane.showMessageDialog(mainFrame,msg,ttl,JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
 	public void makeMenuBar(){
-
 		about.addActionListener(new AboutListener());
 		save.addActionListener(new SaveListener());
 		load.addActionListener(new LoadListener());
@@ -289,18 +275,15 @@ public class MainWindow {
 
 		menuBar.add(game);
 		menuBar.add(help);
-
 	}
 
 	public void enableButtons(){
-
 		cyanb.setEnabled(true);
 		orangeb.setEnabled(true);
 		greenb.setEnabled(true);
 		blueb.setEnabled(true);
 		yellowb.setEnabled(true);
 		redb.setEnabled(true);
-
 	}
 
 	public void disableButtons(){	
@@ -313,18 +296,16 @@ public class MainWindow {
 	}
 
 	public void checkGameStatus(){
-
 		if(gmgrd.getStatus()){
 			disableButtons();
-			displayMessageWindow("WTF don't cheat my game?!", "You WON!", true);
+			displayMessageWindow("Congratulations :) !", "You WON!", true);
 		}else if(gmgrd.getMoves()>=limit&&!gmgrd.getStatus()){
 			disableButtons();
-			displayMessageWindow("You lost little n00b...", "Sorry...", false);
+			displayMessageWindow("Try harder!", "Sorry...", false);
 		}
 	}
 
 	public void SaveGame() {
-
 		savedGameFile = new File(saveName+".FLDSave");
 		try {
 			fos = new FileOutputStream(savedGameFile);
@@ -347,16 +328,11 @@ public class MainWindow {
 	}
 
 	public void LoadGame(File f){
-
 		savedGameFile = f ;
-		
 		try {
 			fis = new FileInputStream(f);
 			ois = new ObjectInputStream(fis);
 			
-			// ois.readObject IS of type GameGrid
-			//System.out.println(ois.readObject() instanceof GameGrid);
-		
 			b.removeLayoutComponent(gmgrd);
 			mainFrame.remove(gmgrd);
 			
@@ -366,19 +342,14 @@ public class MainWindow {
 			mainFrame.add(gmgrd,BorderLayout.CENTER);
 			gmgrd.repaint();
 			updateVars();
-			
-			System.out.println("Done Loading");
-			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//
 		catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -397,14 +368,12 @@ public class MainWindow {
 			s = i ;
 			t = T ;
 			size = s ;
-			System.out.println("MWind size : "+size);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			size = s ;
 			limit = t ;	
-			System.out.println("MWind size : "+size+" and limit : "+t);
 			tempfr.setVisible(false);
 			gmgrd = new GameGrid(size);
 			gmgrd.setSize(limit);
@@ -429,7 +398,6 @@ public class MainWindow {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			//moves = 0 ;
 			fr.dispose();
 			enableButtons();
 			gmgrd.clearAll();
@@ -439,31 +407,23 @@ public class MainWindow {
 	}
 
 	class QuitListener implements ActionListener{
-
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-
 			System.exit(0);
 		}
 	}
 
 	class ColorListener implements ActionListener{
-
 		Color c ;
-
 		public ColorListener(Color co){
 			c = co ;
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-
 			if(c != gmgrd.getCurrentColour()){
-
 				if(gmgrd.getMoves() <=limit){
-
 					gmgrd.updateMoves();
-				//	currentColor = c ;
 					gmgrd.indexGrid(c);
 					updateVars();
 				}
@@ -473,10 +433,8 @@ public class MainWindow {
 	}
 
 	class AboutListener implements ActionListener{
-
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-
 			JFrame fr2 = new JFrame("About This Game");
 
 			JLabel lbl4 = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("images/header.png")));

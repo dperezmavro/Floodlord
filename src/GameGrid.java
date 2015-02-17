@@ -3,42 +3,25 @@ import java.awt.Graphics;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
-
 import javax.swing.JPanel;
 
 public class GameGrid extends JPanel implements Serializable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-
 	private int size , moves = 0, score = 0, limit ;
-	
 	private ArrayList <Cell> visited = new ArrayList<Cell>();
 	private ArrayList <Cell> temp = new ArrayList<Cell>();
 	private ArrayList <Cell> checked = new ArrayList<Cell>();
 	private ArrayList <Cell> notvisited = new ArrayList<Cell>();
 	private Color green1 = new Color(19,109,35) ;
 	private Color orange1 = new Color(238,150,27);
-	
-	
 	private Color[] colors = {Color.red, Color.cyan, Color.yellow, green1 , Color.blue, orange1} ;
 	private Random generator = new Random();
 	private Color currentColor ;
-	
 	private Cell[][] colorGrid;
-
-	
-	/*
-	 * 
-	 * 
-	 * 
-	 */
 	
 	public GameGrid(int i){
 		size = i ;
 		colorGrid= new Cell[size][size];
-		//this.setSize(size*20, size*20);
 	}
 	
 	public void paintComponent(Graphics g){		
@@ -52,7 +35,6 @@ public class GameGrid extends JPanel implements Serializable{
 		}
 		
 		//paint the grid to be played upon
-
 		for(Cell a : notvisited){
 			g.setColor(a.getColor());
 			g.fillRect(a.getX()*20, a.getY()*20, 20, 20) ;
@@ -62,8 +44,6 @@ public class GameGrid extends JPanel implements Serializable{
 			g.setColor(currentColor);
 			g.fillRect(a.getX()*20, a.getY()*20, 20, 20) ;
 		}
-
-		System.out.println("done painting");
 	}
 
 	//make the grid from the begininng 
@@ -75,18 +55,14 @@ public class GameGrid extends JPanel implements Serializable{
 		notvisited.clear();
 
 		for(int i =0 ; i < size ; i++){
-
 			for(int j = 0 ; j < size ; j++){
-
 				Cell c = new Cell(colors[generator.nextInt(6)], j , i) ;
-
 				colorGrid[i][j] = c ;
 				colorGrid[i][j].setNeighboors(size);
 
 				//this could probably be done better !
 				if(i==0 && j==0){
 					visited.add(c);
-					System.out.println("Added to visited");
 				}
 				else{
 					notvisited.add(c);
@@ -94,17 +70,13 @@ public class GameGrid extends JPanel implements Serializable{
 			}
 		}
 		currentColor = visited.get(0).getColor();
-
 		indexGrid(currentColor);
-
 		this.repaint();
 	}
 
 	//probably complete !!
 	public void indexGrid(Color co){
-
 		currentColor = co ;
-
 		for(Cell a : visited){
 			a.setColor(currentColor);
 		}
@@ -115,7 +87,6 @@ public class GameGrid extends JPanel implements Serializable{
 
 		joinLists();
 		checked.clear();
-					
 		this.repaint();
 	}
 	
@@ -125,7 +96,6 @@ public class GameGrid extends JPanel implements Serializable{
 	
 	// this makes sure that the arraylist of visited is always up to date !
 	public void joinLists(){
-				
 		for(Cell a : temp){
 			if(!visited.contains(a)){
 				visited.add(a);
@@ -179,7 +149,6 @@ public class GameGrid extends JPanel implements Serializable{
 					&& colorGrid[c.getUp().getY()][c.getUp().getX()].getColor().getGreen() == currentColor.getGreen()
 					&& colorGrid[c.getUp().getY()][c.getUp().getX()].getColor().getBlue() == currentColor.getBlue()){
 
-
 				if(!(temp.contains(colorGrid[c.getUp().getY()][c.getUp().getX()]))){
 					temp.add(colorGrid[c.getUp().getY()][c.getUp().getX()]);
 				}
@@ -231,7 +200,6 @@ public class GameGrid extends JPanel implements Serializable{
 
 	//see if the grid is all a single colour 
 	public boolean getStatus(){
-		
 		return visited.size()==size*size ;
 	}
 
@@ -240,11 +208,8 @@ public class GameGrid extends JPanel implements Serializable{
 	}
 	
 	public Color getCurrentColour(){
-		
 		return currentColor ;
-		
 	}
-	
 	
 	public void updateMoves(){
 		moves++ ;
